@@ -1,31 +1,26 @@
-version: "3.8"
+version: '3.8'
 services:
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
   web:
-    build:
-      context: .
-      args:
-        UID: ${UID:-1000}
-        GID: ${GID:-${UID:-1000}}
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails server -b 0.0.0.0"
+    volumes:
+      - .:/third
     ports:
       - "3000:3000"
-    environment:
-      - RAILS_MASTER_KEY=$RAILS_MASTER_KEY
-      - DATABASE_URL=postgres://root:password@postgres-db/
     depends_on:
-      postgres-db:
-        condition: service_healthy
-
-  postgres-db:
-    image: postgres
+      - db
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: pg_isready
-      interval: 2s
-      timeout: 5s
-      retries: 30
+      DATABASE_URL: ${DATABASE_URL}
+      SECRET_KEY_BASE: "235499efda6aefc2da56942c1207befb82996e0a6acb10507885d604fffc8b5bd233b222e540e0a6cbe5fd79d764599cbc991c276273b54eef1e82807462ee39"
+
+volumes:
+  postgres_data:
