@@ -1,4 +1,5 @@
 class TodoItemsController < ApplicationController
+  before_action :set_todo_list
   before_action :set_todo_item, only: %i[ show edit update destroy ]
 
   # GET /todo_items or /todo_items.json
@@ -58,6 +59,9 @@ class TodoItemsController < ApplicationController
   end
 
   private
+    def set_todo_item
+      @todo_list = TodoList.find(params[:todo_list_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_item
       @todo_item = TodoItem.find(params[:id])
