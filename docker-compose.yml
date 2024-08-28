@@ -20,7 +20,7 @@ services:
       - db
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      SECRET_KEY_BASE: "235499efda6aefc2da56942c1207befb82996e0a6acb10507885d604fffc8b5bd233b222e540e0a6cbe5fd79d764599cbc991c276273b54eef1e82807462ee39"
+      SECRET_KEY_BASE: "029d7e34eb63ef11144c7d2c963a3fc1cdd455165dc4f61e1be22858bf379320e88139d720c0aa1c42191a6cf9ede1a1c69ec5b062022e93ee5ea13a4effa103"
 
 volumes:
   postgres_data:
