@@ -4,7 +4,7 @@ class TodoItemsController < ApplicationController
 
   # GET /todo_items or /todo_items.json
   def index
-    @todo_items = TodoItem.all
+    @todo_items = @todo_list.todo_items
   end
 
   # GET /todo_items/1 or /todo_items/1.json
@@ -13,7 +13,7 @@ class TodoItemsController < ApplicationController
 
   # GET /todo_items/new
   def new
-    @todo_item = TodoItem.new
+    @todo_item = @todo_list.new
   end
 
   # GET /todo_items/1/edit
@@ -22,7 +22,7 @@ class TodoItemsController < ApplicationController
 
   # POST /todo_items or /todo_items.json
   def create
-    @todo_item = TodoItem.new(todo_item_params)
+    @todo_item = @todo_list.new(todo_item_params)
 
     respond_to do |format|
       if @todo_item.save
@@ -64,7 +64,7 @@ class TodoItemsController < ApplicationController
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_item
-      @todo_item = TodoItem.find(params[:id])
+      @todo_item = @todo_list.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
